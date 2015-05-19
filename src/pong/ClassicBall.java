@@ -104,6 +104,6 @@ public class ClassicBall {
     }
 
     public double getCenterY() {
-        return getX() + getWidth() / 2;
+        return getY() + getWidth() / 2;
     }
 }

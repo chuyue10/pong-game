@@ -15,7 +15,7 @@ public class ClassicPong {
     private final int WIDTH;
     private final int HEIGHT;
     private final int BALL_LENGTH = 10;
-    private final int PADDLE_HEIGHT = 160;
+    private final int PADDLE_HEIGHT = 40;
     private final int PADDLE_WIDTH = 10;
     private final int PADDLE_OFFSET = 10;
     private final int PADDLE_LIMIT = 30;
@@ -38,7 +38,7 @@ public class ClassicPong {
         ball = new ClassicBall(BALL_LENGTH,
                 WIDTH / 2 - BALL_LENGTH / 2,
                 HEIGHT / 2 - BALL_LENGTH / 2,
-                -3, -3);
+                -5, -5);
     }
 
     /**

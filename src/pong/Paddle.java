@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Paddle {
 
-    public static final int PADDLE_VELOCITY = 5;
+    public static final int PADDLE_VELOCITY = 7;
 
     private final double WIDTH;
     private final double HEIGHT;
@@ -63,13 +63,18 @@ public class Paddle {
     }
 
     public void processBallCollision(ClassicBall ball) {
-        double vel = ball.getVelocity();
         if (ball.getSquare().getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
-            if (getY() - ball.getWidth() / 2 > ball.getCenterY() &&
-                    getY() + HEIGHT + ball.getWidth() / 2 < ball.getCenterY()) {
-                ball.setXVelocity(-1 * ball.getDirection() * ball.getVelocity());
-                ball.setYVelocity(0);
-            }
+
+            double v = ball.getVelocity();
+            int dir = ball.getDirection();
+
+            double tan = 1 - 2 * (ball.getCenterY() - getY()) / HEIGHT;
+            double angle = Math.atan(tan);
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
+
+            ball.setXVelocity(-1 * ball.getDirection() * cos * v);
+            ball.setYVelocity(-1 * sin * v);
         }
     }
 }
