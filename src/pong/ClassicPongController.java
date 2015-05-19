@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
  */
 public class ClassicPongController implements Initializable {
 
+    // TODO REMOVE DEBUG LABELS HERE AND FXML
+
     private ClassicPong game;
 
     @FXML

@@ -65,10 +65,11 @@ public class Paddle {
     public void processBallCollision(ClassicBall ball) {
         double vel = ball.getVelocity();
         if (ball.getSquare().getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
-            ball.setXVelocity(-1 * ball.getDirection() * ball.getVelocity());
-            ball.setYVelocity(0);
-
-            if
+            if (getY() - ball.getWidth() / 2 > ball.getCenterY() &&
+                    getY() + HEIGHT + ball.getWidth() / 2 < ball.getCenterY()) {
+                ball.setXVelocity(-1 * ball.getDirection() * ball.getVelocity());
+                ball.setYVelocity(0);
+            }
         }
     }
 }
