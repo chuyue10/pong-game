@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<Pane id="table" fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pong.ClassicPongController">
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+   <children>
+      <Label fx:id="wPressed" layoutX="134.0" layoutY="334.0" text="NOT PRESSED" />
+      <Label fx:id="sPressed" layoutX="134.0" layoutY="372.0" text="NOT PRESSED" />
+      <Label fx:id="upPressed" layoutX="447.0" layoutY="334.0" text="NOT PRESSED" />
+      <Label fx:id="downPressed" layoutX="447.0" layoutY="372.0" prefHeight="17.0" prefWidth="83.0" text="NOT PRESSED" />
+   </children>
+</Pane>
