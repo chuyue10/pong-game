@@ -13,15 +13,8 @@ public class Paddle {
 
     private final double WIDTH;
     private final double HEIGHT;
-    private final double EIGHTH;
 
-    private Rectangle top;
-    private Rectangle top1;
-    private Rectangle top2;
-    private Rectangle mid;
-    private Rectangle bot2;
-    private Rectangle bot1;
-    private Rectangle bot;
+    private Rectangle rectangle;
 
     private int velocity;
 
@@ -30,57 +23,25 @@ public class Paddle {
         this.HEIGHT = height;
         this.velocity = 0;
 
-        this.EIGHTH = HEIGHT / 8;
-        top = new Rectangle(WIDTH, EIGHTH);
-        top1 = new Rectangle(WIDTH, EIGHTH);
-        top2 = new Rectangle(WIDTH, EIGHTH);
-        mid = new Rectangle(WIDTH, 2 * EIGHTH);
-        bot2 = new Rectangle(WIDTH, EIGHTH);
-        bot1 = new Rectangle(WIDTH, EIGHTH);
-        bot = new Rectangle(WIDTH, EIGHTH);
-
-        top.setX(x);
-        top1.setX(x);
-        top2.setX(x);
-        mid.setX(x);
-        bot2.setX(x);
-        bot1.setX(x);
-        bot.setX(x);
+        this.rectangle = new Rectangle(x, y, width, height);
 
         setY(y);
     }
 
     public double getX() {
-        return top.getX();
+        return rectangle.getX();
     }
 
     public double getY() {
-        return top.getY();
+        return rectangle.getY();
     }
 
     public void setY(double y) {
-        top.setY(y);
-        top1.setY(y + EIGHTH);
-        top1.setFill(Paint.valueOf("blue"));
-        top2.setY(y + 2 * EIGHTH);
-        mid.setY(y + 3 * EIGHTH);
-        mid.setFill(Paint.valueOf("blue"));
-        bot2.setY(y + 5 * EIGHTH);
-        bot1.setY(y + 6 * EIGHTH);
-        bot1.setFill(Paint.valueOf("blue"));
-        bot.setY(y + 7 * EIGHTH);
+        rectangle.setY(y);
     }
 
-    public Set<Rectangle> getRectangles() {
-        HashSet<Rectangle> set = new HashSet<>();
-        set.add(top);
-        set.add(top1);
-        set.add(top2);
-        set.add(mid);
-        set.add(bot2);
-        set.add(bot1);
-        set.add(bot);
-        return set;
+    public Rectangle getRectangle() {
+       return rectangle;
     }
 
     public double getWidth() {

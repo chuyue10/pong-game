@@ -54,12 +54,8 @@ public class Main extends Application {
 
         // Adding Components to the Root
         ((Pane) root).getChildren().add(game.getBall().getSquare());
-        for (Rectangle rec: game.getPlayer1().getPaddle().getRectangles()) {
-            ((Pane) root).getChildren().add(rec);
-        }
-        for (Rectangle rec: game.getPlayer2().getPaddle().getRectangles()) {
-            ((Pane) root).getChildren().add(rec);
-        }
+        ((Pane) root).getChildren().add(game.getPlayer1().getPaddle().getRectangle());
+        ((Pane) root).getChildren().add(game.getPlayer2().getPaddle().getRectangle());
 
         // Setup the controller
         ClassicPongController controller = (ClassicPongController)loader.getController();
