@@ -84,7 +84,7 @@ public class ClassicBall {
         return square;
     }
 
-    public double getLength() {
+    public double getWidth() {
         return square.getHeight();
     }
 
@@ -97,5 +97,13 @@ public class ClassicBall {
 
     public double getVelocity() {
         return Math.sqrt(xVelocity * xVelocity + yVelocity * yVelocity);
+    }
+
+    public int getDirection() {
+        return xVelocity > 0 ? 1 : -1;
+    }
+
+    public double getCenterY() {
+        return getX() + getWidth() / 2;
     }
 }

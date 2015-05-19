@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
  */
 public class ClassicPongController implements Initializable {
 
-    private static final int PADDLE_VELOCITY = 5;
-
     private ClassicPong game;
 
     @FXML
@@ -52,19 +50,19 @@ public class ClassicPongController implements Initializable {
         table.setOnKeyPressed(
                 (KeyEvent event) -> {
                     if (event.getCode() == KeyCode.W) {
-                        game.getPlayer1().getPaddle().setVelocity(-1 * PADDLE_VELOCITY);
+                        game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
                         wPressed.setText("W Pressed.");
                     }
                     if (event.getCode() == KeyCode.S) {
-                        game.getPlayer1().getPaddle().setVelocity(PADDLE_VELOCITY);
+                        game.getPlayer1().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
                         sPressed.setText("S Pressed");
                     }
                     if (event.getCode() == KeyCode.UP) {
-                        game.getPlayer2().getPaddle().setVelocity(-1 * PADDLE_VELOCITY);
+                        game.getPlayer2().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
                         upPressed.setText("Up Pressed");
                     }
                     if (event.getCode() == KeyCode.DOWN){
-                        game.getPlayer2().getPaddle().setVelocity(PADDLE_VELOCITY);
+                        game.getPlayer2().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
                         downPressed.setText("Down Pressed");
                     }
                     if (event.getCode() == KeyCode.SPACE) {
