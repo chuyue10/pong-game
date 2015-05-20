@@ -14,7 +14,5 @@
       <Cursor fx:constant="DEFAULT" />
    </cursor>
    <children>
-      <Label fx:id="WPressed" layoutX="447.0" layoutY="334.0" text="NOT PRESSED" />
-      <Label fx:id="UPPressed" layoutX="447.0" layoutY="372.0" prefHeight="17.0" prefWidth="83.0" text="NOT PRESSED" />
    </children>
 </Pane>
