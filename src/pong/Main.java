@@ -12,6 +12,7 @@ package pong;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -48,6 +50,12 @@ public class Main extends Application {
 
         primaryStage.setTitle("Classic Pong");
         primaryStage.setScene(classicPong);
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                soundManager.shutdown();
+            }
+        });
         primaryStage.show();
 
         classicPong.getRoot().requestFocus();
@@ -75,9 +83,9 @@ public class Main extends Application {
         classicPong = new Scene(root, game.getWidth(), game.getHeight());
 
         // Load the sounds for ClassicPong
-//        soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resources/classic_paddle"));
-//        soundManager.loadSound(SOUND_CLASSIC_PONG_END_COLLISION, getClass().getResource("resources/classic_end"));
-//        soundManager.loadSound(SOUND_CLASSIC_PONG_SIDE_COLLISION, getClass().getResource("resources/classic_side"));
+        soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resources/classic_paddle.wav"));
+        soundManager.loadSound(SOUND_CLASSIC_PONG_END_COLLISION, getClass().getResource("resources/classic_lost_ball.mp3"));
+        soundManager.loadSound(SOUND_CLASSIC_PONG_SIDE_COLLISION, getClass().getResource("resources/classic_side.wav"));
     }
 
     public static void main(String[] args) {

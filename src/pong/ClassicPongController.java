@@ -21,88 +21,95 @@ public class ClassicPongController implements Initializable {
 
     private ClassicPong game;
 
-    @FXML
-    Pane table;
+//    private EventHandler<KeyEvent> ingameKeyPressed;
+//    private EventHandler<KeyEvent> ingameKeyReleased;
 
-    @FXML
-    Label wPressed;
+    private EventHandler<KeyEvent> KeyPressed;
+    private EventHandler<KeyEvent> KeyReleased;
 
-    @FXML
-    Label sPressed;
-
-    @FXML
-    Label upPressed;
-
-    @FXML
-    Label downPressed;
+    private boolean wPressed = false;
+    private boolean upPressed = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        assert table != null : "Background Pane table is null.";
-        assert game != null : "Game is null. Set a game for the controller.";
-
         setupControls();
         startAnimation();
     }
 
     private void setupControls() {
 
-        System.out.println("Setting up controls...");
+//        ingameKeyPressed = (KeyEvent event) -> {
+//            if (event.getCode() == KeyCode.W) {
+//                game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
+//                wPressed.setText("W Pressed.");
+//            }
+//            if (event.getCode() == KeyCode.S) {
+//                game.getPlayer1().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
+//                sPressed.setText("S Pressed");
+//            }
+//            if (event.getCode() == KeyCode.UP) {
+//                game.getPlayer2().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
+//                upPressed.setText("Up Pressed");
+//            }
+//            if (event.getCode() == KeyCode.DOWN){
+//                game.getPlayer2().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
+//                downPressed.setText("Down Pressed");
+//            }
+//            if (event.getCode() == KeyCode.SPACE) {
+//                // DO NOTHING
+//            }
+//        };
+//
+//        ingameKeyReleased = (KeyEvent event) -> {
+//            if (event.getCode() == KeyCode.W) {
+//                game.getPlayer1().getPaddle().setVelocity(0);
+//                wPressed.setText("W Released.");
+//            }
+//            if (event.getCode() == KeyCode.S) {
+//                game.getPlayer1().getPaddle().setVelocity(0);
+//                sPressed.setText("S Released");
+//            }
+//            if (event.getCode() == KeyCode.UP) {
+//                game.getPlayer2().getPaddle().setVelocity(0);
+//                upPressed.setText("Up Released");
+//            }
+//            if (event.getCode() == KeyCode.DOWN) {
+//                game.getPlayer2().getPaddle().setVelocity(0);
+//                downPressed.setText("Down Released");
+//            }
+//            if (event.getCode() == KeyCode.SPACE) {
+//                // DO NOTHING
+//            }
+//        };
 
-        table.setOnKeyPressed(
-                (KeyEvent event) -> {
-                    if (event.getCode() == KeyCode.W) {
-                        game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
-                        wPressed.setText("W Pressed.");
-                    }
-                    if (event.getCode() == KeyCode.S) {
-                        game.getPlayer1().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
-                        sPressed.setText("S Pressed");
-                    }
-                    if (event.getCode() == KeyCode.UP) {
-                        game.getPlayer2().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
-                        upPressed.setText("Up Pressed");
-                    }
-                    if (event.getCode() == KeyCode.DOWN){
-                        game.getPlayer2().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
-                        downPressed.setText("Down Pressed");
-                    }
-                    if (event.getCode() == KeyCode.SPACE) {
-                        // DO NOTHING
-                    }
-                }
-        );
+        KeyPressed = (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.W) {
+                wPressed = true;
+            }
+            if (event.getCode() == KeyCode.UP) {
+                upPressed = true;
+            }
+        };
 
-        table.setOnKeyReleased(
-                (KeyEvent event) -> {
-                    if (event.getCode() == KeyCode.W) {
-                        game.getPlayer1().getPaddle().setVelocity(0);
-                        wPressed.setText("W Released.");
-                    }
-                    if (event.getCode() == KeyCode.S) {
-                        game.getPlayer1().getPaddle().setVelocity(0);
-                        sPressed.setText("S Released");
-                    }
-                    if (event.getCode() == KeyCode.UP) {
-                        game.getPlayer2().getPaddle().setVelocity(0);
-                        upPressed.setText("Up Released");
-                    }
-                    if (event.getCode() == KeyCode.DOWN) {
-                        game.getPlayer2().getPaddle().setVelocity(0);
-                        downPressed.setText("Down Released");
-                    }
-                    if (event.getCode() == KeyCode.SPACE) {
-                        // DO NOTHING
-                    }
-                }
-        );
-
+        KeyReleased = (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.W) {
+                wPressed = false;
+            }
+            if (event.getCode() == KeyCode.UP) {
+                upPressed = false;
+            }
+        };
     }
 
     private void startAnimation() {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if (game.getState() == GameState.STANDBY) {
+                    if (wPressed && upPressed) {
+                        game.setState(GameState.INGAME);
+                    }
+                }
                 game.update();
             }
         };

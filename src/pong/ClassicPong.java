@@ -21,7 +21,11 @@ public class ClassicPong {
     private final int PADDLE_OFFSET = 10;
     private final int PADDLE_LIMIT = 30;
 
+    private GameState state;
+
     private ClassicPong(int width, int height) {
+
+        this.state = GameState.LOADING;
 
         soundManager = SoundManager.getInstance();
 
@@ -42,7 +46,9 @@ public class ClassicPong {
         ball = new ClassicBall(BALL_LENGTH,
                 WIDTH / 2 - BALL_LENGTH / 2,
                 HEIGHT / 2 - BALL_LENGTH / 2,
-                -5, -5);
+                0, 0);
+
+        this.state = GameState.STANDBY;
     }
 
     /**
@@ -86,18 +92,26 @@ public class ClassicPong {
     }
 
     public void update() {
-        borderCollisionCheck();
-        paddleCollisionCheck();
-        ball.setX(ball.getXVelocity() + ball.getX());
-        ball.setY(ball.getYVelocity() + ball.getY());
-        if (player1.getPaddle().getY() + player1.getPaddle().getVelocity() > PADDLE_LIMIT &&
-                player1.getPaddle().getY() + player1.getPaddle().getVelocity() < HEIGHT - PADDLE_LIMIT - PADDLE_HEIGHT) {
-            player1.getPaddle().setY(player1.getPaddle().getY() + player1.getPaddle().getVelocity());
+
+        if (state == GameState.INGAME) {
+            borderCollisionCheck();
+            paddleCollisionCheck();
+            ball.setX(ball.getXVelocity() + ball.getX());
+            ball.setY(ball.getYVelocity() + ball.getY());
+            if (player1.getPaddle().getY() + player1.getPaddle().getVelocity() > PADDLE_LIMIT &&
+                    player1.getPaddle().getY() + player1.getPaddle().getVelocity() < HEIGHT - PADDLE_LIMIT - PADDLE_HEIGHT) {
+                player1.getPaddle().setY(player1.getPaddle().getY() + player1.getPaddle().getVelocity());
+            }
+            if (player2.getPaddle().getY() + player2.getPaddle().getVelocity() > PADDLE_LIMIT &&
+                    player2.getPaddle().getY() + player2.getPaddle().getVelocity() < HEIGHT - PADDLE_LIMIT - PADDLE_HEIGHT) {
+                player2.getPaddle().setY(player2.getPaddle().getY() + player2.getPaddle().getVelocity());
+            }
         }
-        if (player2.getPaddle().getY() + player2.getPaddle().getVelocity() > PADDLE_LIMIT &&
-                player2.getPaddle().getY() + player2.getPaddle().getVelocity() < HEIGHT - PADDLE_LIMIT - PADDLE_HEIGHT) {
-            player2.getPaddle().setY(player2.getPaddle().getY() + player2.getPaddle().getVelocity());
-        }
+    }
+
+    public void startRound() {
+        state = GameState.INGAME;
+
     }
 
     private void borderCollisionCheck() {
@@ -125,6 +139,14 @@ public class ClassicPong {
         } else if (player2.getPaddle().processBallCollision(ball)) {
             soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
         }
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState newState) {
+        state = newState;
     }
 
 }
