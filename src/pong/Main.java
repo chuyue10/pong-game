@@ -29,9 +29,10 @@ public class Main extends Application {
     private Scene classicPong;
 
     private final SoundManager soundManager = SoundManager.getInstance(4);
-    public final String CLASSIC_PONG_PADDLE_COLLISION = "classic_pong_paddle";
-    public final String CLASSIC_PONG_SIDE_COLLISION = "classic_pong_side";
-    public final String CLASSIC_PONG_END_COLLISION = "classic_pong_end";
+
+    public static final String SOUND_CLASSIC_PONG_PADDLE_COLLISION = "classic_pong_paddle";
+    public static final String SOUND_CLASSIC_PONG_SIDE_COLLISION = "classic_pong_side";
+    public static final String SOUND_CLASSIC_PONG_END_COLLISION = "classic_pong_end";
 
     public void initialize() throws Exception {
         setupClassicPong();
@@ -70,7 +71,7 @@ public class Main extends Application {
         classicPong = new Scene(root, game.getWidth(), game.getHeight());
 
         // Load the sounds for ClassicPong
-        soundManager.loadSound(CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resouces/a5"));
+        soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resouces/a5"));
     }
 
     public static void main(String[] args) {

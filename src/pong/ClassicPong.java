@@ -6,6 +6,7 @@ package pong;
 public class ClassicPong {
 
     private static ClassicPong game;
+    private static SoundManager soundManager = SoundManager.getInstance();
 
     private Player player1;
     private Player player2;
@@ -101,10 +102,12 @@ public class ClassicPong {
         if (ball.getX() < 0) {
             ball.setXVelocity(ball.getXVelocity() * -1);
             System.out.println("Player 1 dropped the ball.");
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
         }
         if (ball.getX() > WIDTH - ball.getWidth()) {
             ball.setXVelocity(ball.getXVelocity() * -1);
             System.out.println("Player 2 dropped the ball.");
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
         }
         if (ball.getY() < 0) {
             ball.setYVelocity(ball.getYVelocity() * -1);

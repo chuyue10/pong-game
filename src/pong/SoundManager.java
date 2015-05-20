@@ -34,6 +34,10 @@ public class SoundManager {
         }
     }
 
+    public static SoundManager getInstance() {
+        return soundManager;
+    }
+
     public void loadSound(String id, URL url) {
         AudioClip sound = new AudioClip(url.toExternalForm());
         map.put(id, sound);
