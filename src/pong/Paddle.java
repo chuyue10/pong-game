@@ -62,7 +62,7 @@ public class Paddle {
         return velocity;
     }
 
-    public void processBallCollision(ClassicBall ball) {
+    public boolean processBallCollision(ClassicBall ball) {
         if (ball.getSquare().getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
 
             double v = ball.getVelocity();
@@ -75,6 +75,9 @@ public class Paddle {
 
             ball.setXVelocity(-1 * ball.getDirection() * cos * v);
             ball.setYVelocity(-1 * sin * v);
+
+            return true;
         }
+        return false;
     }
 }

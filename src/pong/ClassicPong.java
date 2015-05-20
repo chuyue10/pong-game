@@ -6,7 +6,7 @@ package pong;
 public class ClassicPong {
 
     private static ClassicPong game;
-    private static SoundManager soundManager = SoundManager.getInstance();
+    private static SoundManager soundManager;
 
     private Player player1;
     private Player player2;
@@ -22,6 +22,9 @@ public class ClassicPong {
     private final int PADDLE_LIMIT = 30;
 
     private ClassicPong(int width, int height) {
+
+        soundManager = SoundManager.getInstance();
+
         this.WIDTH = width;
         this.HEIGHT = height;
 
@@ -50,13 +53,12 @@ public class ClassicPong {
      */
     public static ClassicPong getInstance(int width, int height) {
         if (game == null) {
-            return new ClassicPong(width, height);
+            game = new ClassicPong(width, height);
         } else if (game.getHeight() != height ||
                 game.getWidth() != width) {
-            return new ClassicPong(width, height);
-        } else {
-            return game;
+            game = new ClassicPong(width, height);
         }
+        return game;
     }
 
     public int getHeight() {
@@ -100,26 +102,29 @@ public class ClassicPong {
 
     private void borderCollisionCheck() {
         if (ball.getX() < 0) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_END_COLLISION);
             ball.setXVelocity(ball.getXVelocity() * -1);
-            System.out.println("Player 1 dropped the ball.");
-            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
         }
         if (ball.getX() > WIDTH - ball.getWidth()) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_END_COLLISION);
             ball.setXVelocity(ball.getXVelocity() * -1);
-            System.out.println("Player 2 dropped the ball.");
-            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
         }
         if (ball.getY() < 0) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_SIDE_COLLISION);
             ball.setYVelocity(ball.getYVelocity() * -1);
         }
         if (ball.getY() > HEIGHT - ball.getWidth()) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_SIDE_COLLISION);
             ball.setYVelocity(ball.getYVelocity() * -1);
         }
     }
 
     private void paddleCollisionCheck() {
-        player1.getPaddle().processBallCollision(ball);
-        player2.getPaddle().processBallCollision(ball);
+        if (player1.getPaddle().processBallCollision(ball)) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
+        } else if (player2.getPaddle().processBallCollision(ball)) {
+            soundManager.playSound(Main.SOUND_CLASSIC_PONG_PADDLE_COLLISION);
+        }
     }
 
 }

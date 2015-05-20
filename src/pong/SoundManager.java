@@ -2,9 +2,11 @@ package pong;
 
 import javafx.scene.media.AudioClip;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,17 +30,19 @@ public class SoundManager {
 
     public static SoundManager getInstance(int threadCount) {
         if (soundManager == null) {
-            return new SoundManager(threadCount);
-        } else {
-            return soundManager;
+            soundManager = new SoundManager(threadCount);
         }
+        return soundManager;
     }
 
     public static SoundManager getInstance() {
         return soundManager;
     }
 
-    public void loadSound(String id, URL url) {
+    public void loadSound(String id, URL url) throws FileNotFoundException {
+        if (url == null) {
+            throw new FileNotFoundException("This file cannot be found.");
+        }
         AudioClip sound = new AudioClip(url.toExternalForm());
         map.put(id, sound);
     }

@@ -21,6 +21,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.net.URL;
+
 public class Main extends Application {
 
     public static final int HEIGHT = 480;
@@ -28,13 +31,14 @@ public class Main extends Application {
 
     private Scene classicPong;
 
-    private final SoundManager soundManager = SoundManager.getInstance(4);
+    private SoundManager soundManager;
 
     public static final String SOUND_CLASSIC_PONG_PADDLE_COLLISION = "classic_pong_paddle";
     public static final String SOUND_CLASSIC_PONG_SIDE_COLLISION = "classic_pong_side";
     public static final String SOUND_CLASSIC_PONG_END_COLLISION = "classic_pong_end";
 
     public void initialize() throws Exception {
+        soundManager = SoundManager.getInstance(4);
         setupClassicPong();
     }
 
@@ -71,7 +75,9 @@ public class Main extends Application {
         classicPong = new Scene(root, game.getWidth(), game.getHeight());
 
         // Load the sounds for ClassicPong
-        soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resouces/a5"));
+//        soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resources/classic_paddle"));
+//        soundManager.loadSound(SOUND_CLASSIC_PONG_END_COLLISION, getClass().getResource("resources/classic_end"));
+//        soundManager.loadSound(SOUND_CLASSIC_PONG_SIDE_COLLISION, getClass().getResource("resources/classic_side"));
     }
 
     public static void main(String[] args) {
