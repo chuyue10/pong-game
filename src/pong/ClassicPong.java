@@ -37,6 +37,7 @@ public class ClassicPong {
     private GameState state;
 
     // Recorded in-game information
+    StringBuilder result = new StringBuilder();
 
     private ClassicPong(int width, int height) {
 
@@ -210,6 +211,7 @@ public class ClassicPong {
     public void endRound(boolean player) {
         Player winner = player ? player2 : player1;
         Player loser = !player ? player2 : player1;
+        result.append(player ? "1" : "0");
         if (state == GameState.INGAME) {
             winner.setScore(winner.getScore() + 1);
             state = GameState.ENDOFROUND;
@@ -241,6 +243,16 @@ public class ClassicPong {
             ball.setYVelocity(3);
             player1.getPaddle().setY(HEIGHT / 2 - player1.getPaddle().getHeight() / 2);
             player2.getPaddle().setY(HEIGHT / 2 - player2.getPaddle().getHeight() / 2);
+
+            // STUFF
+            Player loser;
+            if (winner == player1) {
+                loser = player2;
+            } else {
+                loser = player1;
+            }
+            System.out.println(winner + " wins against " + loser + " " + winner.getScore() + ":" + loser.getScore());
+            System.out.println(result);
 
         } else {
             throw new IllegalStateException("Can only end game from ENDOFROUND state.");
