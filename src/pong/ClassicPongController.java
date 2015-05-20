@@ -90,8 +90,7 @@ public class ClassicPongController implements Initializable {
                     // DO NOTHING
                 } else if (game.getState() == GameState.STANDBY) {
                     if (wPressed && upPressed) {
-                        game.setState(GameState.INGAME);
-                        System.out.println("State changed to INGAME");
+                        game.startRound();
                     }
                 } else if (game.getState() == GameState.INGAME) {
                     if (wPressed && !sPressed) {
@@ -127,7 +126,7 @@ public class ClassicPongController implements Initializable {
                     } catch (Exception e) {
 
                     } finally {
-                        game.setState(GameState.STANDBY);
+                        game.resetRound();
                     }
                 }
                 game.update();

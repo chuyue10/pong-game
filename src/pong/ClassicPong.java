@@ -1,5 +1,7 @@
 package pong;
 
+import java.util.Random;
+
 /**
  * Created by Charles on 5/18/2015.
  */
@@ -20,6 +22,9 @@ public class ClassicPong {
     private final int PADDLE_WIDTH = 10;
     private final int PADDLE_OFFSET = 10;
     private final int PADDLE_LIMIT = 30;
+
+    private final int STARTING_BALL_SPEED = 4;
+    private final Random RANDOM = new Random();
 
     private GameState state;
 
@@ -48,7 +53,7 @@ public class ClassicPong {
                 HEIGHT / 2 - BALL_LENGTH / 2,
                 0, 0);
 
-        this.state = GameState.STANDBY;
+        resetRound();
     }
 
     /**
@@ -92,7 +97,6 @@ public class ClassicPong {
     }
 
     public void update() {
-
         if (state == GameState.INGAME) {
             borderCollisionCheck();
             paddleCollisionCheck();
@@ -109,9 +113,22 @@ public class ClassicPong {
         }
     }
 
+    /**
+     * This starts the ball from a ready position
+     */
     public void startRound() {
-        state = GameState.INGAME;
+        if (state == GameState.STANDBY) {
+            state = GameState.INGAME;
 
+            // Generate an angle between -45 and 45
+            int angle = RANDOM.nextInt(91) - 45;
+            double rad = Math.toRadians(angle);
+            double sin = Math.sin(rad);
+            double cos = Math.cos(rad);
+
+        } else {
+            throw new IllegalStateException("Can only change to INGAME from STANBY.");
+        }
     }
 
     private void borderCollisionCheck() {
@@ -141,12 +158,37 @@ public class ClassicPong {
         }
     }
 
-    public GameState getState() {
-        return state;
+    /**
+     * Reset the state of the game by returning the ball to the center with no
+     * motion.
+     */
+    public void resetRound() {
+        if (state == GameState.ENDOFROUND) {
+            state = GameState.STANDBY;
+        } else {
+            throw new IllegalStateException("Can only reset round from ENDOFROUND");
+        }
+        ball.setX(WIDTH / 2 - BALL_LENGTH / 2);
+        ball.setY(HEIGHT / 2 - BALL_LENGTH / 2);
+        ball.setXVelocity(0);
+        ball.setYVelocity(0);
     }
 
-    public void setState(GameState newState) {
-        state = newState;
+    /**
+     * Triggered when someone lost the ball. Points increased/decreased here.
+     */
+    public void endRound() {
+        if (state == GameState.INGAME) {
+            state = GameState.ENDOFROUND;
+        } else {
+            throw new IllegalStateException("Can only end round from INGAME state.");
+        }
+
+        // DO POINTS AND SHIT HERE
+    }
+
+    public GameState getState() {
+        return state;
     }
 
 }
