@@ -20,6 +20,9 @@ public class Paddle {
 
     private int velocity;
 
+    private final double SPEED_MULTIPLIER = 0.05;
+    private static int paddleHitCount = 0;
+
     public Paddle(double width, double height, int x, int y) {
         this.WIDTH = width;
         this.HEIGHT = height;
@@ -28,6 +31,14 @@ public class Paddle {
         this.rectangle = new Rectangle(x, y, width, height);
 
         setY(y);
+    }
+
+    public static int getHitCount() {
+        return paddleHitCount;
+    }
+
+    public static void resetHitCount() {
+        paddleHitCount = 0;
     }
 
     public double getX() {
@@ -64,6 +75,7 @@ public class Paddle {
 
     public boolean processBallCollision(ClassicBall ball) {
         if (ball.getSquare().getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
+            paddleHitCount++;
 
             double v = ball.getVelocity();
             int dir = ball.getDirection();
@@ -73,8 +85,8 @@ public class Paddle {
             double cos = Math.cos(angle);
             double sin = Math.sin(angle);
 
-            ball.setXVelocity(-1 * ball.getDirection() * cos * v);
-            ball.setYVelocity(-1 * sin * v);
+            ball.setXVelocity(-1 * dir * cos * v * (1 + SPEED_MULTIPLIER));
+            ball.setYVelocity(-1 * sin * v * (1 + SPEED_MULTIPLIER));
 
             return true;
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -11,8 +12,18 @@
 
 <Pane id="table" fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pong.ClassicPongController">
    <cursor>
-      <Cursor fx:constant="DEFAULT" />
+      <Cursor fx:constant="NONE" />
    </cursor>
    <children>
+      <Label fx:id="score1" layoutX="165.0" prefHeight="80.0" prefWidth="150.0" text="0" textAlignment="CENTER">
+         <font>
+            <Font name="Rockwell" size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="score2" layoutX="374.0" prefHeight="117.0" prefWidth="150.0" text="0" textAlignment="CENTER">
+         <font>
+            <Font name="Rockwell" size="96.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

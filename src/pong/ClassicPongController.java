@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -17,18 +18,16 @@ import java.util.ResourceBundle;
  */
 public class ClassicPongController implements Initializable {
 
-    // TODO REMOVE DEBUG LABELS HERE AND FXML
-
     private ClassicPong game;
 
     @FXML
-    Label WPressed;
-
-    @FXML
-    Label UPPressed;
-
-    @FXML
     Pane table;
+
+    @FXML
+    Label score1;
+
+    @FXML
+    Label score2;
 
     private EventHandler<KeyEvent> keyPressed;
     private EventHandler<KeyEvent> keyReleased;
@@ -38,7 +37,7 @@ public class ClassicPongController implements Initializable {
     private boolean upPressed = false;
     private boolean downPressed = false;
 
-    private final int ROUND_DELAY = 2000;
+    private final int ROUND_DELAY = 1000;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -88,11 +87,15 @@ public class ClassicPongController implements Initializable {
             public void handle(long now) {
                 if (game.getState() == GameState.LOADING) {
                     // DO NOTHING
+                    // THE GAME IS LOADING
                 } else if (game.getState() == GameState.STANDBY) {
+                    // WAIT FOR BOTH THE PLAYERS TO BE READY FOR THE ROUND
+                    // WHEN BOTH MOVE-UP CONTROLS ARE ENGAGED THE ROUND STARTS
                     if (wPressed && upPressed) {
                         game.startRound();
                     }
                 } else if (game.getState() == GameState.INGAME) {
+                    // WHILE IN GAME THE PADDLES WILL RESPOND TO THE PLAYER COMMANDS
                     if (wPressed && !sPressed) {
                         if (game.getPlayer1().getPaddle().getVelocity() != -1 * Paddle.PADDLE_VELOCITY) {
                             game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
@@ -120,14 +123,23 @@ public class ClassicPongController implements Initializable {
                         }
                     }
                 } else if (game.getState() == GameState.ENDOFROUND) {
+                    // WHEN THE ROUND ENDS THE GAME WILL PAUSE SO THE PLAYERS
+                    // CAN GET READY AGAIN
+                    score1.setText(game.getPlayer1().getScore() + "");
+                    score2.setText(game.getPlayer2().getScore() + "");
                     try {
-                        System.out.println("END OF ROUND. COMMENCING DELAY.");
                         Thread.sleep(ROUND_DELAY);
                     } catch (Exception e) {
 
                     } finally {
                         game.resetRound();
                     }
+                } else if (game.getState() == GameState.FINISH) {
+                    // THIS GAME IS DONE
+                    // FOR NOW DO NOTHING
+                    score1.setText(game.getPlayer1().getScore() + "");
+                    score2.setText(game.getPlayer2().getScore() + "");
+                    // TODO END OF GAME STUFF
                 }
                 game.update();
             }
