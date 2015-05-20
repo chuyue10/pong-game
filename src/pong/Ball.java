@@ -19,7 +19,7 @@ public class Ball {
     public Ball(double radius, double x, double y, double dX, double dY) {
         this.xVelocity = dX;
         this.yVelocity = dY;
-        this.circle = new Circle(x, y, radius, Paint.valueOf("black"));
+        this.circle = new Circle(x, y, radius, Paint.valueOf("white"));
     }
 
     public void replace(double x, double y, double dX, double dY) {

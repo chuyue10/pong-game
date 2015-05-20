@@ -18,6 +18,14 @@ import java.util.ResourceBundle;
  */
 public class ClassicPongController implements Initializable {
 
+    // TODO FIX COLORS AND ADD LINES TO THE CENTER
+
+    // TODO SHOW INSTRUCTION AT BEGINNING OF EACH ROUND
+    // TODO DISPLAY FANCY END OF GAME INFORMATION WHEN GAME ENDS
+    // TODO MAIN MENU WITH SETTINGS
+    // TODO MAIN MENU WITH HELP PAGE
+    // TODO MAIN MENU WITH MATCH HISTORY MAYBE QUERYING LATER
+
     private ClassicPong game;
 
     @FXML

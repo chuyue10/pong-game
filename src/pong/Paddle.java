@@ -29,6 +29,7 @@ public class Paddle {
         this.velocity = 0;
 
         this.rectangle = new Rectangle(x, y, width, height);
+        this.rectangle.setFill(Paint.valueOf("white"));
 
         setY(y);
     }

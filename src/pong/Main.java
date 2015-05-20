@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -74,6 +75,19 @@ public class Main extends Application {
         ((Pane) root).getChildren().add(game.getBall().getSquare());
         ((Pane) root).getChildren().add(game.getPlayer1().getPaddle().getRectangle());
         ((Pane) root).getChildren().add(game.getPlayer2().getPaddle().getRectangle());
+
+        // Adding the line in the middle
+        int height = HEIGHT / 21;
+        for (int i = 0; i < 41; i += 2) {
+            Rectangle line = new Rectangle(
+                    WIDTH / 2 - WIDTH / 640,
+                    i * HEIGHT / 41,
+                    WIDTH / 320,
+                    HEIGHT / 41
+            );
+            line.setFill(Paint.valueOf("white"));
+            ((Pane) root).getChildren().add(line);
+        }
 
         // Setup the controller
         ClassicPongController controller = (ClassicPongController)loader.getController();

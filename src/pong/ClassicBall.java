@@ -21,7 +21,7 @@ public class ClassicBall {
         this.xVelocity = dX;
         this.yVelocity = dY;
         this.square = new Rectangle(x, y, length, length);
-        square.setFill(Paint.valueOf("black"));
+        square.setFill(Paint.valueOf("white"));
     }
 
     /**
