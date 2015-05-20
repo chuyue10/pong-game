@@ -21,14 +21,24 @@ public class ClassicPongController implements Initializable {
 
     private ClassicPong game;
 
-//    private EventHandler<KeyEvent> ingameKeyPressed;
-//    private EventHandler<KeyEvent> ingameKeyReleased;
+    @FXML
+    Label WPressed;
 
-    private EventHandler<KeyEvent> KeyPressed;
-    private EventHandler<KeyEvent> KeyReleased;
+    @FXML
+    Label UPPressed;
+
+    @FXML
+    Pane table;
+
+    private EventHandler<KeyEvent> keyPressed;
+    private EventHandler<KeyEvent> keyReleased;
 
     private boolean wPressed = false;
+    private boolean sPressed = false;
     private boolean upPressed = false;
+    private boolean downPressed = false;
+
+    private final int ROUND_DELAY = 2000;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,76 +48,86 @@ public class ClassicPongController implements Initializable {
 
     private void setupControls() {
 
-//        ingameKeyPressed = (KeyEvent event) -> {
-//            if (event.getCode() == KeyCode.W) {
-//                game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
-//                wPressed.setText("W Pressed.");
-//            }
-//            if (event.getCode() == KeyCode.S) {
-//                game.getPlayer1().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
-//                sPressed.setText("S Pressed");
-//            }
-//            if (event.getCode() == KeyCode.UP) {
-//                game.getPlayer2().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
-//                upPressed.setText("Up Pressed");
-//            }
-//            if (event.getCode() == KeyCode.DOWN){
-//                game.getPlayer2().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
-//                downPressed.setText("Down Pressed");
-//            }
-//            if (event.getCode() == KeyCode.SPACE) {
-//                // DO NOTHING
-//            }
-//        };
-//
-//        ingameKeyReleased = (KeyEvent event) -> {
-//            if (event.getCode() == KeyCode.W) {
-//                game.getPlayer1().getPaddle().setVelocity(0);
-//                wPressed.setText("W Released.");
-//            }
-//            if (event.getCode() == KeyCode.S) {
-//                game.getPlayer1().getPaddle().setVelocity(0);
-//                sPressed.setText("S Released");
-//            }
-//            if (event.getCode() == KeyCode.UP) {
-//                game.getPlayer2().getPaddle().setVelocity(0);
-//                upPressed.setText("Up Released");
-//            }
-//            if (event.getCode() == KeyCode.DOWN) {
-//                game.getPlayer2().getPaddle().setVelocity(0);
-//                downPressed.setText("Down Released");
-//            }
-//            if (event.getCode() == KeyCode.SPACE) {
-//                // DO NOTHING
-//            }
-//        };
-
-        KeyPressed = (KeyEvent event) -> {
+        keyPressed = (KeyEvent event) -> {
             if (event.getCode() == KeyCode.W) {
                 wPressed = true;
+            }
+            if (event.getCode() == KeyCode.S) {
+                sPressed = true;
             }
             if (event.getCode() == KeyCode.UP) {
                 upPressed = true;
             }
+            if (event.getCode() == KeyCode.DOWN) {
+                downPressed = true;
+            }
         };
 
-        KeyReleased = (KeyEvent event) -> {
+        keyReleased = (KeyEvent event) -> {
             if (event.getCode() == KeyCode.W) {
                 wPressed = false;
+            }
+            if (event.getCode() == KeyCode.S) {
+                sPressed = false;
             }
             if (event.getCode() == KeyCode.UP) {
                 upPressed = false;
             }
+            if (event.getCode() == KeyCode.DOWN) {
+                downPressed = false;
+            }
         };
-    }
+
+        table.setOnKeyPressed(keyPressed);
+        table.setOnKeyReleased(keyReleased);
+ }
 
     private void startAnimation() {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (game.getState() == GameState.STANDBY) {
+                if (game.getState() == GameState.LOADING) {
+                    // DO NOTHING
+                } else if (game.getState() == GameState.STANDBY) {
                     if (wPressed && upPressed) {
                         game.setState(GameState.INGAME);
+                        System.out.println("State changed to INGAME");
+                    }
+                } else if (game.getState() == GameState.INGAME) {
+                    if (wPressed && !sPressed) {
+                        if (game.getPlayer1().getPaddle().getVelocity() != -1 * Paddle.PADDLE_VELOCITY) {
+                            game.getPlayer1().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
+                        }
+                    } else if (!wPressed && sPressed) {
+                        if (game.getPlayer1().getPaddle().getVelocity() != Paddle.PADDLE_VELOCITY) {
+                            game.getPlayer1().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
+                        }
+                    } else {
+                        if (game.getPlayer1().getPaddle().getVelocity() != 0) {
+                            game.getPlayer1().getPaddle().setVelocity(0);
+                        }
+                    }
+                    if (upPressed && !downPressed) {
+                        if (game.getPlayer2().getPaddle().getVelocity() != -1 * Paddle.PADDLE_VELOCITY) {
+                            game.getPlayer2().getPaddle().setVelocity(-1 * Paddle.PADDLE_VELOCITY);
+                        }
+                    } else if (!upPressed && downPressed) {
+                        if (game.getPlayer2().getPaddle().getVelocity() != Paddle.PADDLE_VELOCITY) {
+                            game.getPlayer2().getPaddle().setVelocity(Paddle.PADDLE_VELOCITY);
+                        }
+                    } else {
+                        if (game.getPlayer2().getPaddle().getVelocity() != 0) {
+                            game.getPlayer2().getPaddle().setVelocity(0);
+                        }
+                    }
+                } else if (game.getState() == GameState.ENDOFROUND) {
+                    try {
+                        System.out.println("END OF ROUND. COMMENCING DELAY.");
+                        Thread.sleep(ROUND_DELAY);
+                    } catch (Exception e) {
+
+                    } finally {
+                        game.setState(GameState.STANDBY);
                     }
                 }
                 game.update();
