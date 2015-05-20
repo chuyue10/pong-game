@@ -7,8 +7,6 @@ import java.util.Random;
  */
 public class ClassicPong {
 
-    // TODO IMPLEMENT SWITCHING SERVING TO PLAYERS
-
     private static ClassicPong game;
     private static SoundManager soundManager;
 
@@ -33,6 +31,8 @@ public class ClassicPong {
     private final String PLAYER_2_NAME = "Player 2";
 
     private final int WINNING_SCORE = 5;
+
+    private int servingDir = 0;
 
     private GameState state;
 
@@ -139,7 +139,14 @@ public class ClassicPong {
             double sin = Math.sin(rad);
             double cos = Math.cos(rad);
 
-            ball.setXVelocity(BASE_BALL_SPEED * cos);
+            // Generate a random serving direction initially then alternate
+            if (servingDir == 0) {
+                servingDir = RANDOM.nextBoolean() ? 1 : -1;
+            } else {
+                servingDir *= -1;
+            }
+
+            ball.setXVelocity(servingDir * BASE_BALL_SPEED * cos);
             ball.setYVelocity(BASE_BALL_SPEED * sin);
 
         } else {
