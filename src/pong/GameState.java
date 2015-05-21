@@ -8,5 +8,7 @@ public enum GameState {
     STANDBY,
     INGAME,
     ENDOFROUND,
+    ENDOFGAME,
+    ENDOFSERIES,
     FINISH
 }

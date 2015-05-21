@@ -16,14 +16,29 @@
       <Cursor fx:constant="NONE" />
    </cursor>
    <children>
-      <Label fx:id="score1" layoutX="165.0" prefHeight="80.0" prefWidth="150.0" text="0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score1" alignment="CENTER" layoutX="170.0" prefHeight="80.0" prefWidth="150.0" text="0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="score2" layoutX="374.0" prefHeight="117.0" prefWidth="150.0" text="0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score2" alignment="CENTER" layoutX="320.0" prefHeight="117.0" prefWidth="150.0" text="0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="gameover" alignment="CENTER" layoutY="127.0" prefHeight="93.0" prefWidth="640.0" text="Game Over" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="ISOCP2_IV25" size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="gamereport" alignment="CENTER" layoutY="255.0" prefHeight="17.0" prefWidth="640.0" text="Player 1 wins against Player 2 13 : 10." textFill="WHITE">
+         <font>
+            <Font name="ISOCP2_IV25" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="instruction" alignment="CENTER" layoutY="431.0" prefWidth="640.0" text="Press &quot;Space&quot; to start a new game, &quot;Esc&quot; to quit." textFill="WHITE">
+         <font>
+            <Font name="ISOCP3_IV25" size="24.0" />
          </font>
       </Label>
    </children>

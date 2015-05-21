@@ -30,11 +30,14 @@ public class ClassicPong {
     private final String PLAYER_1_NAME = "Player 1";
     private final String PLAYER_2_NAME = "Player 2";
 
-    private final int WINNING_SCORE = 5;
+    private final int WINNING_SCORE = 3;
 
     private int servingDir = 0;
 
     private GameState state;
+
+    private Player winner;
+    private Player loser;
 
     // Recorded in-game information
     StringBuilder result = new StringBuilder();
@@ -133,9 +136,9 @@ public class ClassicPong {
         if (state == GameState.STANDBY) {
             state = GameState.INGAME;
 
-            // Generate an angle between -45 and 45
-            int angle = RANDOM.nextInt(91) - 45;
-            double rad = Math.toRadians(angle);
+            // Generate an angle between -30 and 30
+            int angle = RANDOM.nextInt(61) - 30;
+            double rad = Math.toRadians(30);
             double sin = Math.sin(rad);
             double cos = Math.cos(rad);
 
@@ -216,15 +219,15 @@ public class ClassicPong {
      *               true is player 2
      */
     public void endRound(boolean player) {
-        Player winner = player ? player2 : player1;
-        Player loser = !player ? player2 : player1;
+        Player roundWinner = player ? player2 : player1;
+        Player roundLoser = !player ? player2 : player1;
         result.append(player ? "1" : "0");
         if (state == GameState.INGAME) {
-            winner.setScore(winner.getScore() + 1);
+            roundWinner.setScore(roundWinner.getScore() + 1);
             state = GameState.ENDOFROUND;
-            if (winner.getScore() >= WINNING_SCORE) { // IF WINNING
-                if (winner.getScore() > loser.getScore() + 1) { // HAS TO WIN BY TWO
-                    endGame(winner);
+            if (roundWinner.getScore() >= WINNING_SCORE) { // IF WINNING
+                if (roundWinner.getScore() > roundLoser.getScore() + 1) { // HAS TO WIN BY TWO
+                    endGame(roundWinner);
                 }
             }
         } else {
@@ -237,37 +240,65 @@ public class ClassicPong {
     }
 
     /**
-     * Run this to finish the game
+     * Run this to end the game.
      */
     public void endGame(Player winner) {
         if (state == GameState.ENDOFROUND) {
             state = GameState.FINISH;
 
-            // END OF GAME ANIMATIONS
-            ball.setX(WIDTH / 2 - BALL_LENGTH / 2);
-            ball.setY(HEIGHT / 2 - BALL_LENGTH / 2);
-            ball.setXVelocity(3);
-            ball.setYVelocity(3);
-            player1.getPaddle().setY(HEIGHT / 2 - player1.getPaddle().getHeight() / 2);
-            player2.getPaddle().setY(HEIGHT / 2 - player2.getPaddle().getHeight() / 2);
-
             // STUFF
-            Player loser;
+            this.winner = winner;
             if (winner == player1) {
                 loser = player2;
             } else {
                 loser = player1;
             }
-            System.out.println(winner + " wins against " + loser + " " + winner.getScore() + ":" + loser.getScore());
-            System.out.println(result);
 
+            finish();
         } else {
             throw new IllegalStateException("Can only end game from ENDOFROUND state.");
         }
     }
 
-    public void recordGame() {
-        // TODO SAVE THE INFORMATION FOR THIS GAME PERMANENTLY
+    /**
+     * Triggers the end of game animation.
+     */
+    public void finish() {
+        // END OF GAME ANIMATIONS
+        ball.setX(WIDTH / 2 - BALL_LENGTH / 2);
+        ball.setY(HEIGHT / 2 - BALL_LENGTH / 2);
+        ball.setXVelocity(3);
+        ball.setYVelocity(3);
+        player1.getPaddle().setY(HEIGHT / 2 - player1.getPaddle().getHeight() / 2);
+        player2.getPaddle().setY(HEIGHT / 2 - player2.getPaddle().getHeight() / 2);
+        player1.getPaddle().setVelocity(0);
+        player2.getPaddle().setVelocity(0);
+    }
+
+    public String getResult() {
+        return result.toString();
+    }
+
+    public String getGameOverMessage() {
+        return winner + " wins against " + loser + " " + winner.getScore() + ":" + loser.getScore() + ".";
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public Player getLoser() {
+        return loser;
+    }
+
+    public void reset() {
+        state = GameState.STANDBY;
+        servingDir = 0;
+        player1.setScore(0);
+        player2.setScore(0);
+        Paddle.resetHitCount();
+        winner = null;
+        loser = null;
     }
 
 }

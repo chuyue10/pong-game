@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
  */
 public class ClassicPongController implements Initializable {
 
-    // TODO SHOW INSTRUCTION AT BEGINNING OF EACH ROUND
     // TODO DISPLAY FANCY END OF GAME INFORMATION WHEN GAME ENDS
+    // TODO SAVE GAME INFORMATION TO LOGS
     // TODO MAIN MENU WITH SETTINGS
     // TODO MAIN MENU WITH HELP PAGE
     // TODO MAIN MENU WITH MATCH HISTORY MAYBE QUERYING LATER
@@ -35,6 +35,16 @@ public class ClassicPongController implements Initializable {
     @FXML
     Label score2;
 
+    @FXML
+    Label gameover;
+
+    @FXML
+    Label gamereport;
+
+    @FXML
+    Label instruction;
+
+
     private EventHandler<KeyEvent> keyPressed;
     private EventHandler<KeyEvent> keyReleased;
 
@@ -42,6 +52,8 @@ public class ClassicPongController implements Initializable {
     private boolean sPressed = false;
     private boolean upPressed = false;
     private boolean downPressed = false;
+    private boolean spacePressed = false;
+    private boolean escapePressed = false;
 
     private final int ROUND_DELAY = 1000;
 
@@ -66,6 +78,12 @@ public class ClassicPongController implements Initializable {
             if (event.getCode() == KeyCode.DOWN) {
                 downPressed = true;
             }
+            if (event.getCode() == KeyCode.SPACE) {
+                spacePressed = true;
+            }
+            if (event.getCode() == KeyCode.ESCAPE) {
+                escapePressed = true;
+            }
         };
 
         keyReleased = (KeyEvent event) -> {
@@ -88,6 +106,12 @@ public class ClassicPongController implements Initializable {
  }
 
     private void startAnimation() {
+
+        // Hide the end of game display.
+        gameover.setVisible(false);
+        gamereport.setVisible(false);
+        instruction.setVisible(false);
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -97,6 +121,11 @@ public class ClassicPongController implements Initializable {
                 } else if (game.getState() == GameState.STANDBY) {
                     // WAIT FOR BOTH THE PLAYERS TO BE READY FOR THE ROUND
                     // WHEN BOTH MOVE-UP CONTROLS ARE ENGAGED THE ROUND STARTS
+
+                    gameover.setVisible(false);
+                    gamereport.setVisible(false);
+                    instruction.setVisible(false);
+
                     if (wPressed && upPressed) {
                         game.startRound();
                     }
@@ -141,10 +170,24 @@ public class ClassicPongController implements Initializable {
                         game.resetRound();
                     }
                 } else if (game.getState() == GameState.FINISH) {
-                    // THIS GAME IS DONE
-                    // FOR NOW DO NOTHING
+
                     score1.setText(game.getPlayer1().getScore() + "");
                     score2.setText(game.getPlayer2().getScore() + "");
+
+                    gameover.setVisible(true);
+                    gameover.toFront();
+
+                    gamereport.setText(game.getGameOverMessage());
+                    gamereport.toFront();
+                    gamereport.setVisible(true);
+
+                    instruction.toFront();
+                    instruction.setVisible(true);
+
+                    if (spacePressed) {
+                        game.reset();
+                    }
+
                     // TODO END OF GAME STUFF
                 }
                 game.update();
