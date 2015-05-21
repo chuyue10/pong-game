@@ -292,7 +292,7 @@ public class ClassicPong {
     }
 
     public void reset() {
-        state = GameState.STANDBY;
+        state = GameState.ENDOFROUND;
         servingDir = 0;
         player1.setScore(0);
         player2.setScore(0);

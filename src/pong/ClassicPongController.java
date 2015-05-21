@@ -99,6 +99,12 @@ public class ClassicPongController implements Initializable {
             if (event.getCode() == KeyCode.DOWN) {
                 downPressed = false;
             }
+            if (event.getCode() == KeyCode.SPACE) {
+                spacePressed = false;
+            }
+            if (event.getCode() == KeyCode.ESCAPE) {
+                escapePressed = false;
+            }
         };
 
         table.setOnKeyPressed(keyPressed);
