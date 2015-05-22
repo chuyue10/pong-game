@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutY="58.0" prefWidth="640.0" text="PONG" textFill="WHITE">
+         <font>
+            <Font name="ISOCT2_IV25" size="96.0" />
+         </font>
+      </Label>
+      <VBox alignment="CENTER" layoutX="222.0" layoutY="203.0" spacing="20.0">
+          <children>
+            <Button fx:id="gotoPlay" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-focus-color: transparent;" text="Play" textFill="WHITE">
+               <font>
+                  <Font name="ISOCT2_IV25" size="18.0" />
+               </font>
+            </Button>
+             <Button fx:id="gotoInstructions" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-focus-color: transparent;" text="Instructions" textFill="WHITE">
+                <font>
+                   <Font name="ISOCT2_IV25" size="18.0" />
+                </font>
+             </Button>
+             <Button fx:id="gotoSettings" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-focus-color: transparent;" text="Settings" textFill="WHITE">
+                <font>
+                   <Font name="ISOCT2_IV25" size="18.0" />
+                </font>
+             </Button>
+             <Button fx:id="gotoAbout" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-focus-color: transparent;" text="About" textFill="WHITE">
+                <font>
+                   <Font name="ISOCT2_IV25" size="18.0" />
+                </font>
+             </Button>
+         </children>
+      </VBox>
+   </children>
+</Pane>
