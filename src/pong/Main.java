@@ -35,13 +35,18 @@ public class Main extends Application {
     private Scene classicPong;
 
     private SoundManager soundManager;
+    private TextFileManager textFileManager;
 
     public static final String SOUND_CLASSIC_PONG_PADDLE_COLLISION = "classic_pong_paddle";
     public static final String SOUND_CLASSIC_PONG_SIDE_COLLISION = "classic_pong_side";
     public static final String SOUND_CLASSIC_PONG_END_COLLISION = "classic_pong_end";
 
+    public static final String GAME_LOG_ID = "gamelog";
+    public static final String GAME_LOG_PATH = "gamelog.txt";
+
     public void initialize() throws Exception {
         soundManager = SoundManager.getInstance(4);
+        textFileManager = TextFileManager.getInstance();
         setupClassicPong();
     }
 
@@ -100,6 +105,9 @@ public class Main extends Application {
         soundManager.loadSound(SOUND_CLASSIC_PONG_PADDLE_COLLISION, getClass().getResource("resources/classic_paddle.wav"));
         soundManager.loadSound(SOUND_CLASSIC_PONG_END_COLLISION, getClass().getResource("resources/classic_lost_ball.mp3"));
         soundManager.loadSound(SOUND_CLASSIC_PONG_SIDE_COLLISION, getClass().getResource("resources/classic_side.wav"));
+
+        // Load the paths for the TextFileManager
+        textFileManager.loadFile(GAME_LOG_ID, GAME_LOG_PATH);
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,10 @@
 package pong;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,9 +24,10 @@ public class TextFileManager {
 
     private TextFileManager() {
         this.textPool = Executors.newFixedThreadPool(THREAD_COUNT);
+        this.map = new HashMap<>();
     }
 
-    public TextFileManager getInstance() {
+    public static TextFileManager getInstance() {
         if (textFileManager == null) {
             textFileManager = new TextFileManager();
         }
@@ -49,8 +54,20 @@ public class TextFileManager {
      * @param id
      * @param text
      */
-    public void writeToFile(String id, String text) {
+    public void writeLineToFile(String id, String text) {
+        System.out.println("Writing to " + map.get(id));
+        if (map.containsKey(id)) {
+            File file = new File(map.get(id));
 
+            try {
+                file.createNewFile();
+                FileWriter fw = new FileWriter(file, true);
+                fw.write(text + "\n");
+                fw.close();
+            } catch (IOException e) {
+
+            }
+        }
     }
 
     public void shutdown() {

@@ -1,5 +1,8 @@
 package pong;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -9,6 +12,7 @@ public class ClassicPong {
 
     private static ClassicPong game;
     private static SoundManager soundManager;
+    private final TextFileManager textFileManager;
 
     private Player player1;
     private Player player2;
@@ -47,6 +51,7 @@ public class ClassicPong {
         this.state = GameState.LOADING;
 
         soundManager = SoundManager.getInstance();
+        textFileManager = TextFileManager.getInstance();
 
         this.WIDTH = width;
         this.HEIGHT = height;
@@ -273,6 +278,8 @@ public class ClassicPong {
         player2.getPaddle().setY(HEIGHT / 2 - player2.getPaddle().getHeight() / 2);
         player1.getPaddle().setVelocity(0);
         player2.getPaddle().setVelocity(0);
+
+        recordGame();
     }
 
     public String getResult() {
@@ -299,6 +306,23 @@ public class ClassicPong {
         Paddle.resetHitCount();
         winner = null;
         loser = null;
+        result.delete(0, result.length());
+    }
+
+    public void recordGame() {
+        StringBuilder out = new StringBuilder();
+        out.append("{");
+        out.append(player1.toString());
+        out.append("}");
+        out.append("{");
+        out.append(player2.toString());
+        out.append("} ");
+        out.append(getResult());
+        textFileManager.writeLineToFile(Main.GAME_LOG_ID, out.toString());
+    }
+
+    public String decodeGame(String raw) {
+        return null;
     }
 
 }
