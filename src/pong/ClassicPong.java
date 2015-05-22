@@ -2,6 +2,7 @@ package pong;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 
@@ -311,18 +312,18 @@ public class ClassicPong {
 
     public void recordGame() {
         StringBuilder out = new StringBuilder();
+        out.append("[");
+        out.append(LocalDateTime.now().toString());
+        out.append("] ");
         out.append("{");
         out.append(player1.toString());
-        out.append("}");
+        out.append("} ");
         out.append("{");
         out.append(player2.toString());
         out.append("} ");
         out.append(getResult());
-        textFileManager.writeLineToFile(Main.GAME_LOG_ID, out.toString());
-    }
 
-    public String decodeGame(String raw) {
-        return null;
+        textFileManager.writeLineToFile(Main.GAME_LOG_ID, out.toString());
     }
 
 }
